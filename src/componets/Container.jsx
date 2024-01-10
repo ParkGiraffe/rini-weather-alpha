@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     fontSize: 15,
-    marginBottom: 5
+    marginBottom: 5,
   },
   figure: {
     fontSize: 12,
