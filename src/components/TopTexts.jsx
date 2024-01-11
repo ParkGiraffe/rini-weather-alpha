@@ -16,12 +16,12 @@ const TopTexts = props => {
 const styles = StyleSheet.create({
   main: {
     // backgroundColor: 'cyan',
-    height: 180,
+    height: 190,
     // width: '20%',
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 20,
+    paddingVertical: 20,
   },
   cityText: {
     fontSize: 35,
