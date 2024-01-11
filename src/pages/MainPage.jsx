@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Container from '../componets/Container';
 import WideContainer from '../componets/WideContainer';
 import Blank from '../componets/Blank';
 import Temperature from '../componets/Temperature';
 import Precipitation from '../componets/Precipitation';
 import Weathers from '../componets/Weathers';
+import TopTexts from '../componets/TopTexts';
 
 const MainPage = () => {
   const weathersProps = {
@@ -22,7 +23,8 @@ const MainPage = () => {
   };
 
   return (
-    <View style={styles.main}>
+    <ScrollView style={styles.main}>
+      <TopTexts city={'city'} />
       <WideContainer>
         <Temperature title={'기온'} desc={'여름의 무더위'} figure={`30도`} />
       </WideContainer>
@@ -48,8 +50,8 @@ const MainPage = () => {
           probFigure={`없음 : 0%`}
         />
       </WideContainer>
-
-    </View>
+      <Blank />
+    </ScrollView>
   );
 };
 
@@ -57,9 +59,9 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     // flexDirection: 'column',
-    alignItems: 'center',
+    // alignItems: 'center',
     // backgroundColor: 'yellow',
-    padding: '5%',
+    paddingHorizontal: '5%',
   },
   containers: {
     width: '100%',
