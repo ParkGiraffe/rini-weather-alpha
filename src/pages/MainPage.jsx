@@ -1,12 +1,12 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import Container from '../componets/Container';
-import WideContainer from '../componets/WideContainer';
-import Blank from '../componets/Blank';
-import Temperature from '../componets/Temperature';
-import Precipitation from '../componets/Precipitation';
-import Weathers from '../componets/Weathers';
-import TopTexts from '../componets/TopTexts';
+import Container from '../components/Container';
+import WideContainer from '../components/WideContainer';
+import Blank from '../components/Blank';
+import Temperature from '../components/Temperature';
+import Precipitation from '../components/Precipitation';
+import Weathers from '../components/Weathers';
+import TopTexts from '../components/TopTexts';
 
 const MainPage = () => {
   const weathersProps = {
