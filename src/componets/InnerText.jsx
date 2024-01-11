@@ -1,49 +1,52 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const Container = props => {
+const InnerText = props => {
   const {title, img, desc, figure} = props;
 
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.imgContainer}>{img}</View>
-      <View style={styles.botTextContainer}>
-        <Text style={styles.desc}>{desc}</Text>
+      <View style={styles.topTextContainer}>
+        <Text style={styles.title}>{title}</Text>
         <Text style={styles.figure}>{figure}</Text>
       </View>
+      <View style={styles.imgContainer}>{img}</View>
+      <Text style={styles.desc}>{desc}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#d9d9d9',
+    // backgroundColor: 'cyan',
     height: 160,
-    width: 160,
+    width: '20%',
     borderRadius: 15,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     paddingVertical: 10,
   },
   imgContainer: {
     height: 60,
     width: 60,
     backgroundColor: 'yellow',
+    marginBottom: 7,
   },
-  botTextContainer: {
+  topTextContainer: {
     alignItems: 'center',
+    marginBottom: 7,
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
   },
   desc: {
-    fontSize: 15,
-    marginBottom: 5,
+    textAlign: 'center',
+    fontSize: 11,
+    // marginBottom: 5,
   },
   figure: {
-    fontSize: 12,
+    fontSize: 11,
   },
 });
 
-export default Container;
+export default InnerText;
