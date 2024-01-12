@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Container from '../components/Container';
 import WideContainer from '../components/WideContainer';
@@ -7,8 +7,34 @@ import Temperature from '../components/Temperature';
 import Precipitation from '../components/Precipitation';
 import Weathers from '../components/Weathers';
 import TopTexts from '../components/TopTexts';
+import useHttp from '../hooks/useHttp';
+import {API_KEY} from '@env';
+
+const apiKey = API_KEY;
+console.log(apiKey);
+const openWeatherMapURL = 'https://api.openweathermap.org/data/2.5/weather?';
 
 const MainPage = () => {
+  const [weather, setWeather] = useState({});
+  const [city, setCity] = useState('seoul');
+
+  const {isLoading, error, sendRequest: fetchWeather} = useHttp();
+
+  useEffect(() => {
+    const transformweather = weatherObj => {
+      const temperature = weatherObj.main.temp;
+
+      setWeather({
+        temperature: temperature,
+      });
+    };
+
+    fetchWeather(
+      {url: `${openWeatherMapURL}q=${city}&appid=${apiKey}&units=metric`},
+      transformweather,
+    );
+  }, [fetchWeather]);
+
   const weathersProps = {
     desc: {
       morning: `여름의 무더위`,
@@ -26,7 +52,11 @@ const MainPage = () => {
     <ScrollView style={styles.main}>
       <TopTexts city={'city'} />
       <WideContainer>
-        <Temperature title={'기온'} desc={'여름의 무더위'} figure={`30도`} />
+        <Temperature
+          title={'기온'}
+          desc={'여름의 무더위'}
+          figure={`${weather.temperature}도`}
+        />
       </WideContainer>
       <Blank />
 
