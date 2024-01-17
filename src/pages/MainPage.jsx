@@ -8,11 +8,27 @@ import Precipitation from '../components/Precipitation';
 import Weathers from '../components/Weathers';
 import TopTexts from '../components/TopTexts';
 import useHttp from '../hooks/useHttp';
-import {API_KEY} from '@env';
+import {FORECAST_API_KEY} from '@env';
 
-const apiKey = API_KEY;
-console.log(apiKey);
-const openWeatherMapURL = 'https://api.openweathermap.org/data/2.5/weather?';
+const apiKey = FORECAST_API_KEY;
+console.log(apiKey)
+
+const forecastBaseURL =
+  'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?';
+const shortTermParams = {
+  serviceKey: apiKey,
+  pageNo: '1',
+  numOfRows: '10',
+  dataType: 'JSON',
+  base_date: '20240117',
+  base_time: '0500',
+  nx: '34', // 위도
+  ny: '127', // 경도
+};
+const queryShortTerm = new URLSearchParams(shortTermParams).toString().split('%25').join('%');
+// console.log(queryShortTerm)
+const shortTermForecastURL = `${forecastBaseURL}${queryShortTerm}`;
+console.log(shortTermForecastURL);
 
 const MainPage = () => {
   const [weather, setWeather] = useState({});
@@ -29,10 +45,7 @@ const MainPage = () => {
       });
     };
 
-    fetchWeather(
-      {url: `${openWeatherMapURL}q=${city}&appid=${apiKey}&units=metric`},
-      transformweather,
-    );
+    fetchWeather({url: shortTermForecastURL}, transformweather);
   }, [fetchWeather]);
 
   const weathersProps = {
