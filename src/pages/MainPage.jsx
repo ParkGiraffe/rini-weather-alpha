@@ -8,24 +8,36 @@ import Precipitation from '../components/Precipitation';
 import Weathers from '../components/Weathers';
 import TopTexts from '../components/TopTexts';
 import useHttp from '../hooks/useHttp';
-import {FORECAST_API_KEY} from '@env';
+import {FORECAST_APP_API_KEY} from '@env';
 
-const apiKey = FORECAST_API_KEY;
-console.log(apiKey)
+const apiKey = FORECAST_APP_API_KEY;
+// console.log(apiKey);
 
 const forecastBaseURL =
   'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?';
+
+const nowTime = new Date();
+console.log(nowTime);
+
 const shortTermParams = {
   serviceKey: apiKey,
   pageNo: '1',
   numOfRows: '10',
   dataType: 'JSON',
-  base_date: '20240117',
-  base_time: '0500',
+  base_date:
+    nowTime.getFullYear() +
+    `${nowTime.getMonth() + 1}`.padStart(2, '0') +
+    nowTime.getDate().toString().padStart(2, '0'),
+  base_time: '2000',
+    // `${nowTime.getHours()}`.padStart(2, '0') +
+    // `${nowTime.getMinutes()}`.padStart(2, '0'),
   nx: '34', // 위도
   ny: '127', // 경도
 };
-const queryShortTerm = new URLSearchParams(shortTermParams).toString().split('%25').join('%');
+const queryShortTerm = new URLSearchParams(shortTermParams)
+  .toString()
+  .split('%25')
+  .join('%');
 // console.log(queryShortTerm)
 const shortTermForecastURL = `${forecastBaseURL}${queryShortTerm}`;
 console.log(shortTermForecastURL);
