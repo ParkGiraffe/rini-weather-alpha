@@ -9,30 +9,29 @@ import Weathers from '../components/Weathers';
 import TopTexts from '../components/TopTexts';
 import useHttp from '../hooks/useHttp';
 import {FORECAST_APP_API_KEY} from '@env';
+import getGrid from '../functions/grid';
+import getDateTime from '../functions/dateTime';
 
 const apiKey = FORECAST_APP_API_KEY;
 // console.log(apiKey);
 
 const forecastBaseURL =
-  'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?';
+  // `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?`; // 초단기예보
+  `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?`; // 초단기실황조회
+// 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?'; // 단기예보
 
-const nowTime = new Date();
-// console.log(nowTime);
+const {x, y} = getGrid('toXY', 37.715133, 127.0016985);
+const {baseTime, baseDate} = getDateTime();
 
 const shortTermParams = {
   serviceKey: apiKey,
   pageNo: '1',
-  numOfRows: '5',
+  numOfRows: '8',
   dataType: 'JSON',
-  base_date:
-    nowTime.getFullYear() +
-    `${nowTime.getMonth() + 1}`.padStart(2, '0') +
-    nowTime.getDate().toString().padStart(2, '0'),
-  base_time: '0500',
-  // `${nowTime.getHours()}`.padStart(2, '0') +
-  // `${nowTime.getMinutes()}`.padStart(2, '0'),
-  nx: '34', // 위도
-  ny: '127', // 경도
+  base_date: baseDate,
+  base_time: baseTime,
+  nx: x, //경도
+  ny: y, //위도
 };
 const queryShortTerm = new URLSearchParams(shortTermParams)
   .toString()
@@ -40,7 +39,7 @@ const queryShortTerm = new URLSearchParams(shortTermParams)
   .join('%');
 // console.log(queryShortTerm)
 const shortTermForecastURL = `${forecastBaseURL}${queryShortTerm}`;
-// console.log(shortTermForecastURL);
+console.log(shortTermForecastURL);
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
@@ -49,7 +48,7 @@ const MainPage = () => {
   const {isLoading, error, sendRequest: fetchWeather} = useHttp();
 
   useEffect(() => {
-    const transformweather = weatherObj => {
+    const applyCurrentWeather = weatherObj => {
       const forecastData = weatherObj.response.body.items.item;
       const TMP = forecastData[0].fcstValue;
 
@@ -57,7 +56,7 @@ const MainPage = () => {
         temperature: TMP,
       });
     };
-    fetchWeather({url: shortTermForecastURL}, transformweather);
+    fetchWeather({url: shortTermForecastURL}, applyCurrentWeather);
   }, [fetchWeather]);
 
   const weathersProps = {
