@@ -17,20 +17,20 @@ const forecastBaseURL =
   'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?';
 
 const nowTime = new Date();
-console.log(nowTime);
+// console.log(nowTime);
 
 const shortTermParams = {
   serviceKey: apiKey,
   pageNo: '1',
-  numOfRows: '10',
+  numOfRows: '5',
   dataType: 'JSON',
   base_date:
     nowTime.getFullYear() +
     `${nowTime.getMonth() + 1}`.padStart(2, '0') +
     nowTime.getDate().toString().padStart(2, '0'),
-  base_time: '2000',
-    // `${nowTime.getHours()}`.padStart(2, '0') +
-    // `${nowTime.getMinutes()}`.padStart(2, '0'),
+  base_time: '0500',
+  // `${nowTime.getHours()}`.padStart(2, '0') +
+  // `${nowTime.getMinutes()}`.padStart(2, '0'),
   nx: '34', // 위도
   ny: '127', // 경도
 };
@@ -40,23 +40,23 @@ const queryShortTerm = new URLSearchParams(shortTermParams)
   .join('%');
 // console.log(queryShortTerm)
 const shortTermForecastURL = `${forecastBaseURL}${queryShortTerm}`;
-console.log(shortTermForecastURL);
+// console.log(shortTermForecastURL);
 
 const MainPage = () => {
-  const [weather, setWeather] = useState({});
+  const [curWeather, setCurWeather] = useState({});
   const [city, setCity] = useState('seoul');
 
   const {isLoading, error, sendRequest: fetchWeather} = useHttp();
 
   useEffect(() => {
     const transformweather = weatherObj => {
-      const temperature = weatherObj.main.temp;
+      const forecastData = weatherObj.response.body.items.item;
+      const TMP = forecastData[0].fcstValue;
 
-      setWeather({
-        temperature: temperature,
+      setCurWeather({
+        temperature: TMP,
       });
     };
-
     fetchWeather({url: shortTermForecastURL}, transformweather);
   }, [fetchWeather]);
 
@@ -80,7 +80,7 @@ const MainPage = () => {
         <Temperature
           title={'기온'}
           desc={'여름의 무더위'}
-          figure={`${weather.temperature}도`}
+          figure={`${curWeather.temperature}도`}
         />
       </WideContainer>
       <Blank />
