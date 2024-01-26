@@ -8,38 +8,10 @@ import Precipitation from '../components/Precipitation';
 import Weathers from '../components/Weathers';
 import TopTexts from '../components/TopTexts';
 import useHttp from '../hooks/useHttp';
-import {FORECAST_APP_API_KEY} from '@env';
-import getGrid from '../functions/grid';
-import getDateTime from '../functions/dateTime';
+import applyUltraSrtFcst from '../functions/applyUltraSrtFcst';
+import getUrls from '../functions/urls';
 
-const apiKey = FORECAST_APP_API_KEY;
-// console.log(apiKey);
-
-const forecastBaseURL =
-  // `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?`; // 초단기예보
-  `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?`; // 초단기실황조회
-// 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?'; // 단기예보
-
-const {x, y} = getGrid('toXY', 37.715133, 127.0016985);
-const {baseTime, baseDate} = getDateTime();
-
-const shortTermParams = {
-  serviceKey: apiKey,
-  pageNo: '1',
-  numOfRows: '8',
-  dataType: 'JSON',
-  base_date: baseDate,
-  base_time: baseTime,
-  nx: x, //경도
-  ny: y, //위도
-};
-const queryShortTerm = new URLSearchParams(shortTermParams)
-  .toString()
-  .split('%25')
-  .join('%');
-// console.log(queryShortTerm)
-const shortTermForecastURL = `${forecastBaseURL}${queryShortTerm}`;
-console.log(shortTermForecastURL);
+const {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL} = getUrls();
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
@@ -48,15 +20,18 @@ const MainPage = () => {
   const {isLoading, error, sendRequest: fetchWeather} = useHttp();
 
   useEffect(() => {
-    const applyCurrentWeather = weatherObj => {
-      const forecastData = weatherObj.response.body.items.item;
-      const TMP = forecastData[0].fcstValue;
-
+    const ultraSrtFcst = async () => {
+      const {T1H, RN1} = await fetchWeather(
+        {url: ultraSrtFcstURL},
+        applyUltraSrtFcst,
+      );
       setCurWeather({
-        temperature: TMP,
+        temperature: T1H,
+        rainfall: RN1,
       });
     };
-    fetchWeather({url: shortTermForecastURL}, applyCurrentWeather);
+
+    ultraSrtFcst();
   }, [fetchWeather]);
 
   const weathersProps = {
@@ -99,7 +74,7 @@ const MainPage = () => {
         <Precipitation
           title={'강수량'}
           rainDesc={'햇빛 쨍쨍'}
-          rainAmount={`시간당 0mm`}
+          rainAmount={`시간당 ${curWeather.rainfall}mm`}
           probDesc={'비가 내릴 확률'}
           probFigure={`없음 : 0%`}
         />
