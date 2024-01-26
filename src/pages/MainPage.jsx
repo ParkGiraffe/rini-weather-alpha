@@ -16,7 +16,6 @@ const {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL} = getUrls();
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
   const [city, setCity] = useState('seoul');
-
   const {isLoading, error, sendRequest: fetchWeather} = useHttp();
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const MainPage = () => {
 
   return (
     <ScrollView style={styles.main}>
-      <TopTexts city={'city'} />
+      <TopTexts city={city} />
       <WideContainer>
         <Temperature
           title={'기온'}
