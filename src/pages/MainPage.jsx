@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  PermissionsAndroid,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Container from '../components/Container';
 import WideContainer from '../components/WideContainer';
 import Blank from '../components/Blank';
@@ -10,6 +17,7 @@ import TopTexts from '../components/TopTexts';
 import useHttp from '../hooks/useHttp';
 import applyUltraSrtFcst from '../functions/applyUltraSrtFcst';
 import getUrls from '../functions/urls';
+import Geolocation from 'react-native-geolocation-service';
 
 const {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL} = getUrls();
 
@@ -19,6 +27,28 @@ const MainPage = () => {
   const {isLoading, error, sendRequest: fetchWeather} = useHttp();
 
   useEffect(() => {
+    if (Platform.OS === 'ios') {
+      Geolocation.requestAuthorization('always');
+    }
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ]);
+    }
+
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        console.log(Platform.OS, latitude, longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+
+    // 초단기예보 : 현재기온, 1시간 강수량
     const ultraSrtFcst = async () => {
       const {T1H, RN1} = await fetchWeather(
         {url: ultraSrtFcstURL},
