@@ -2,11 +2,11 @@ import getGrid from './grid';
 import getDateTime from './dateTime';
 import {FORECAST_APP_API_KEY} from '@env';
 
-const getUrls = () => {
+const getUrls = (lat, lon) => {
   const apiKey = FORECAST_APP_API_KEY;
   // console.log(apiKey);
 
-  const {x, y} = getGrid('toXY', 37.715133, 127.0016985);
+  const {x, y} = getGrid('toXY', lat, lon);
   const {baseTime, baseDate} = getDateTime();
 
   const shortTermParams = {
