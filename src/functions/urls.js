@@ -1,6 +1,6 @@
 import getGrid from './grid';
 import getDateTime from './dateTime';
-import {FORECAST_APP_API_KEY} from '@env';
+import {FORECAST_APP_API_KEY, DECODE_LOCATION_API_KEY} from '@env';
 
 const getUrls = (lat, lon) => {
   const apiKey = FORECAST_APP_API_KEY;
@@ -34,7 +34,21 @@ const getUrls = (lat, lon) => {
     'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?' +
     queryShortTerm; // 단기예보
 
-  return {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL};
+  // 주소 변환 API 주소
+  const shortTermParams2 = {
+    key: DECODE_LOCATION_API_KEY,
+    latitude: lat,
+    longitude: lon,
+    localityLanguage: 'ko',
+  };
+  const queryShortTerm2 = new URLSearchParams(shortTermParams2)
+    .toString()
+    // .split('%25')
+    // .join('%');
+  const ReverseGeoURL =
+    'https://api.bigdatacloud.net/data/reverse-geocode?' + queryShortTerm2;
+
+  return {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL, ReverseGeoURL};
 };
 
 export default getUrls;

@@ -18,17 +18,18 @@ import useHttp from '../hooks/useHttp';
 import applyUltraSrtFcst from '../functions/applyUltraSrtFcst';
 import getUrls from '../functions/urls';
 import Geolocation from 'react-native-geolocation-service';
+import applyReverseGeo from '../functions/applyReverseGeo';
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
-  const [city, setCity] = useState('seoul');
-  const {isLoading, error, sendRequest: fetchWeather} = useHttp();
-  let ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL;
+  const [locality, setLocality] = useState('');
+  const {isLoading1, error1, sendRequest: fetchWeather} = useHttp();
+  const {isLoading2, error2, sendRequest: fetchLocation} = useHttp();
+  let ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL, ReverseGeoURL;
 
   useEffect(() => {
     // 초단기예보 : 현재기온, 1시간 강수량
     const ultraSrtFcst = async () => {
-      console.log(1);
       const {T1H, RN1} = await fetchWeather(
         {url: ultraSrtFcstURL},
         applyUltraSrtFcst,
@@ -39,7 +40,15 @@ const MainPage = () => {
       });
     };
 
-    const getGeo = async () => {
+    const ReverseGeoCode = async () => {
+      const {city, locality} = await fetchLocation(
+        {url: ReverseGeoURL},
+        applyReverseGeo,
+      );
+      setLocality(locality);
+    };
+
+    const getGeoWeather = async () => {
       if (Platform.OS === 'ios') {
         await Geolocation.requestAuthorization('always');
       }
@@ -57,7 +66,9 @@ const MainPage = () => {
           ultraSrtFcstURL = urls.ultraSrtFcstURL;
           ultraSrtNcstURL = urls.ultraSrtNcstURL;
           VilageFcstURL = urls.VilageFcstURL;
+          ReverseGeoURL = urls.ReverseGeoURL;
           ultraSrtFcst();
+          ReverseGeoCode();
         },
         error => {
           console.log(error.code, error.message);
@@ -66,8 +77,8 @@ const MainPage = () => {
       );
     };
 
-    getGeo();
-  }, [fetchWeather]);
+    getGeoWeather();
+  }, [fetchWeather, fetchLocation]);
 
   const weathersProps = {
     desc: {
@@ -84,7 +95,7 @@ const MainPage = () => {
 
   return (
     <ScrollView style={styles.main}>
-      <TopTexts city={city} />
+      <TopTexts city={locality} />
       <WideContainer>
         <Temperature
           title={'기온'}
