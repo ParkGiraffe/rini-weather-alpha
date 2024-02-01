@@ -8,7 +8,7 @@ const InnerText = props => {
     <View style={styles.main}>
       <View style={styles.topTextContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.figure}>{figure}</Text>
+        <Text style={styles.figure}>{figure}도</Text>
       </View>
       <View style={styles.imgContainer}>{img}</View>
       <Text style={styles.desc}>{desc}</Text>

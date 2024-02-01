@@ -1,10 +1,10 @@
-export default function getDateTime() {
+export default function getDateTime(next) {
   const now = new Date();
 
   const year = now.getFullYear();
 
   let month = now.getMonth() + 1;
-  let date = now.getDate();
+  let date = next ? now.getDate() + next : now.getDate();
   let hours = now.getHours();
   let minutes = now.getMinutes();
 
@@ -22,7 +22,7 @@ export default function getDateTime() {
 
   return {
     baseDate: year + `${month}`.padStart(2, '0') + `${date}`.padStart(2, '0'),
-    baseTime: `${hours}`.padStart(2, '0') + '30', 
+    baseTime: `${hours}`.padStart(2, '0') + '30',
     // basetime : 초단기실황일 경우 00분 || 초단기예보일 경우 30분
   };
 }

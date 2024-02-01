@@ -19,19 +19,35 @@ import applyUltraSrtFcst from '../functions/applyUltraSrtFcst';
 import getUrls from '../functions/urls';
 import Geolocation from 'react-native-geolocation-service';
 import applyReverseGeo from '../functions/applyReverseGeo';
+import applyPm from '../functions/applyPm';
+import getPmUrl from '../functions/pmUrl';
+import applyVilageFcst from '../functions/\bapplyVilageFcst';
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
+  const [tmrWeather, setTmrWeather] = useState({});
   const [locality, setLocality] = useState('');
-  const {isLoading1, error1, sendRequest: fetchWeather} = useHttp();
+  const {isLoading1, error1, sendRequest: fetchUltraSrtFcst} = useHttp();
   const {isLoading2, error2, sendRequest: fetchLocation} = useHttp();
-  let ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL, ReverseGeoURL;
+  const {isLoading3, error3, sendRequest: fetchVilage} = useHttp();
+  let UltraSrtFcstURL, UltraSrtNcstURL, VilageFcstURL, ReverseGeoURL, PmUrl;
 
   useEffect(() => {
+    // 단기예보 : 강수확률, 내일과 모레 기온
+    const vilageFcst = async () => {
+      // console.log(VilageFcstURL);
+      const response = await fetchVilage({url: VilageFcstURL}, applyVilageFcst);
+      setTmrWeather({
+        morning: response[0],
+        afternoon: response[1],
+        evening: response[2],
+      });
+    };
+
     // 초단기예보 : 현재기온, 1시간 강수량
     const ultraSrtFcst = async () => {
-      const {T1H, RN1} = await fetchWeather(
-        {url: ultraSrtFcstURL},
+      const {T1H, RN1} = await fetchUltraSrtFcst(
+        {url: UltraSrtFcstURL},
         applyUltraSrtFcst,
       );
       setCurWeather({
@@ -63,11 +79,12 @@ const MainPage = () => {
         position => {
           const {latitude, longitude} = position.coords;
           const urls = getUrls(latitude, longitude);
-          ultraSrtFcstURL = urls.ultraSrtFcstURL;
-          ultraSrtNcstURL = urls.ultraSrtNcstURL;
+          UltraSrtFcstURL = urls.UltraSrtFcstURL;
+          UltraSrtNcstURL = urls.UltraSrtNcstURL;
           VilageFcstURL = urls.VilageFcstURL;
           ReverseGeoURL = urls.ReverseGeoURL;
           ultraSrtFcst();
+          vilageFcst();
           ReverseGeoCode();
         },
         error => {
@@ -78,7 +95,7 @@ const MainPage = () => {
     };
 
     getGeoWeather();
-  }, [fetchWeather, fetchLocation]);
+  }, [fetchUltraSrtFcst, fetchLocation, fetchVilage]);
 
   const weathersProps = {
     desc: {
@@ -106,7 +123,7 @@ const MainPage = () => {
       <Blank />
 
       <WideContainer>
-        <Weathers desc={weathersProps.desc} figure={weathersProps.figure} />
+        <Weathers desc={weathersProps.desc} temps={tmrWeather} />
       </WideContainer>
       <Blank />
 

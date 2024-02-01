@@ -1,102 +1,22 @@
 [
   {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "LGT",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "0",
-    "nx": 60,
-    "ny": 130
+    "baseDate": "20240201",
+    "baseTime": "0500",
+    "category": "TMP",
+    "fcstDate": "20240202",
+    "fcstTime": "0900",
+    "fcstValue": "4",
+    "nx": 70,
+    "ny": 70
   },
   {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "PTY",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "0",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "RN1",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "강수없음",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "SKY",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "1",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "T1H",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "3",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "REH",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "40",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "UUU",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "0.5",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "VVV",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "1",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "VEC",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "208",
-    "nx": 60,
-    "ny": 130
-  },
-  {
-    "baseDate": "20240126",
-    "baseTime": "1430",
-    "category": "WSD",
-    "fcstDate": "20240126",
-    "fcstTime": "1500",
-    "fcstValue": "1",
-    "nx": 60,
-    "ny": 130
+    "baseDate": "20240201",
+    "baseTime": "0500",
+    "category": "TMP",
+    "fcstDate": "20240202",
+    "fcstTime": "1300",
+    "fcstValue": "9",
+    "nx": 70,
+    "ny": 70
   }
 ]

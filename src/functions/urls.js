@@ -9,6 +9,7 @@ const getUrls = (lat, lon) => {
   const {x, y} = getGrid('toXY', lat, lon);
   const {baseTime, baseDate} = getDateTime();
 
+  // 초단기실황
   const shortTermParams = {
     serviceKey: apiKey,
     pageNo: '1',
@@ -24,31 +25,45 @@ const getUrls = (lat, lon) => {
     .split('%25')
     .join('%');
 
-  const ultraSrtFcstURL =
+  // 단기예보
+  const shortTermParams2 = {
+    serviceKey: apiKey,
+    pageNo: '1',
+    numOfRows: '809',
+    dataType: 'JSON',
+    base_date: baseDate,
+    base_time: '0500',
+    nx: x, //경도
+    ny: y, //위도
+  };
+  const queryShortTerm2 = new URLSearchParams(shortTermParams2)
+    .toString()
+    .split('%25')
+    .join('%');
+
+  const UltraSrtFcstURL =
     `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?` +
     queryShortTerm; // 초단기예보
-  const ultraSrtNcstURL =
+  const UltraSrtNcstURL =
     `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?` +
     queryShortTerm; // 초단기실황조회
   const VilageFcstURL =
     'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?' +
-    queryShortTerm; // 단기예보
+    queryShortTerm2; // 단기예보
 
   // 주소 변환 API 주소
-  const shortTermParams2 = {
+  const shortTermParams3 = {
     key: DECODE_LOCATION_API_KEY,
     latitude: lat,
     longitude: lon,
     localityLanguage: 'ko',
   };
-  const queryShortTerm2 = new URLSearchParams(shortTermParams2)
-    .toString()
-    // .split('%25')
-    // .join('%');
-  const ReverseGeoURL =
-    'https://api.bigdatacloud.net/data/reverse-geocode?' + queryShortTerm2;
+  const queryShortTerm3 = new URLSearchParams(shortTermParams3).toString();
 
-  return {ultraSrtFcstURL, ultraSrtNcstURL, VilageFcstURL, ReverseGeoURL};
+  const ReverseGeoURL =
+    'https://api.bigdatacloud.net/data/reverse-geocode?' + queryShortTerm3;
+
+  return {UltraSrtFcstURL, UltraSrtNcstURL, VilageFcstURL, ReverseGeoURL};
 };
 
 export default getUrls;
