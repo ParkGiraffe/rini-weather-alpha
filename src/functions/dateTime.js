@@ -1,4 +1,4 @@
-export default function getDateTime(next) {
+export default function getDateTime(next, isZeroMinute) {
   const now = new Date();
 
   const year = now.getFullYear();
@@ -22,7 +22,9 @@ export default function getDateTime(next) {
 
   return {
     baseDate: year + `${month}`.padStart(2, '0') + `${date}`.padStart(2, '0'),
-    baseTime: `${hours}`.padStart(2, '0') + '30',
+    baseTime: isZeroMinute
+      ? `${hours}`.padStart(2, '0') + '00'
+      : `${hours}`.padStart(2, '0') + '30',
     // basetime : 초단기실황일 경우 00분 || 초단기예보일 경우 30분
   };
 }

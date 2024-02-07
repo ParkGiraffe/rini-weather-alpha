@@ -27,6 +27,7 @@ const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
   const [tmrWeather, setTmrWeather] = useState({});
   const [locality, setLocality] = useState('');
+  const [curPop, setCurPop] = useState(0);
   const {isLoading1, error1, sendRequest: fetchUltraSrtFcst} = useHttp();
   const {isLoading2, error2, sendRequest: fetchLocation} = useHttp();
   const {isLoading3, error3, sendRequest: fetchVilage} = useHttp();
@@ -36,11 +37,14 @@ const MainPage = () => {
     // 단기예보 : 강수확률, 내일과 모레 기온
     const vilageFcst = async () => {
       // console.log(VilageFcstURL);
-      const response = await fetchVilage({url: VilageFcstURL}, applyVilageFcst);
+      const {forecastData, popData} = await fetchVilage(
+        {url: VilageFcstURL},
+        applyVilageFcst,
+      );
       setTmrWeather({
-        morning: response[0],
-        afternoon: response[1],
-        evening: response[2],
+        morning: forecastData[0],
+        afternoon: forecastData[1],
+        evening: forecastData[2],
       });
     };
 
@@ -126,12 +130,12 @@ const MainPage = () => {
         <Weathers desc={weathersProps.desc} temps={tmrWeather} />
       </WideContainer>
       <Blank />
-
+      {/* 
       <View style={styles.containers}>
         <Container title={'자외선'} desc={'낮음'} figure={`자외선 지수 : 1`} />
         <Container title={'미세먼지'} desc={'매우 나쁨'} figure={`76㎍/㎥`} />
       </View>
-      <Blank />
+      <Blank /> */}
 
       <WideContainer>
         <Precipitation
@@ -139,7 +143,7 @@ const MainPage = () => {
           rainDesc={'햇빛 쨍쨍'}
           rainAmount={`시간당 ${curWeather.rainfall}mm`}
           probDesc={'비가 내릴 확률'}
-          probFigure={`없음 : 0%`}
+          probFigure={`없음 : ${curPop}%`}
         />
       </WideContainer>
       <Blank />
