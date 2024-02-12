@@ -22,6 +22,7 @@ import applyReverseGeo from '../functions/applyReverseGeo';
 import applyPm from '../functions/applyPm';
 import getPmUrl from '../functions/pmUrl';
 import applyVilageFcst from '../functions/\bapplyVilageFcst';
+import useText from '../hooks/useText';
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
@@ -32,6 +33,12 @@ const MainPage = () => {
   const {isLoading2, error2, sendRequest: fetchLocation} = useHttp();
   const {isLoading3, error3, sendRequest: fetchVilage} = useHttp();
   let UltraSrtFcstURL, UltraSrtNcstURL, VilageFcstURL, ReverseGeoURL, PmUrl;
+
+  const [curTmpText, setCurTmpText] = useText('TMP');
+  const [tmrMorTmpText, setTmrMorTmpText] = useText('TMP');
+  const [tmrAftTmpText, setTmrAftTmpText] = useText('TMP');
+  const [tmrDinTmpText, setTmrDinTmpText] = useText('TMP');
+  const [rn1Text, setRn1Text] = useText('RN1');
 
   useEffect(() => {
     // 단기예보 : 강수확률, 내일과 모레 기온
@@ -46,6 +53,9 @@ const MainPage = () => {
         afternoon: forecastData[1],
         evening: forecastData[2],
       });
+      setTmrMorTmpText(forecastData[0]);
+      setTmrAftTmpText(forecastData[1]);
+      setTmrDinTmpText(forecastData[2]);
     };
 
     // 초단기예보 : 현재기온, 1시간 강수량
@@ -58,6 +68,8 @@ const MainPage = () => {
         temperature: T1H,
         rainfall: RN1,
       });
+      setCurTmpText(T1H);
+      setRn1Text(RN1);
     };
 
     const ReverseGeoCode = async () => {
@@ -120,14 +132,19 @@ const MainPage = () => {
       <WideContainer>
         <Temperature
           title={'기온'}
-          desc={'여름의 무더위'}
+          desc={curTmpText}
           figure={`${curWeather.temperature}도`}
         />
       </WideContainer>
       <Blank />
 
       <WideContainer>
-        <Weathers desc={weathersProps.desc} temps={tmrWeather} />
+        <Weathers
+          mor={tmrMorTmpText}
+          aft={tmrAftTmpText}
+          din={tmrDinTmpText}
+          temps={tmrWeather}
+        />
       </WideContainer>
       <Blank />
       {/* 
@@ -140,7 +157,7 @@ const MainPage = () => {
       <WideContainer>
         <Precipitation
           title={'강수량'}
-          rainDesc={'햇빛 쨍쨍'}
+          rainDesc={rn1Text}
           rainAmount={`시간당 ${curWeather.rainfall}mm`}
           probDesc={'비가 내릴 확률'}
           probFigure={`없음 : ${curPop}%`}

@@ -3,26 +3,26 @@ import {StyleSheet, View, Text} from 'react-native';
 import InnerText from './InnerText';
 
 const Weathers = props => {
-  const {title, img, desc, temps} = props;
+  const {title, img, mor, aft, din, temps} = props;
 
   return (
     <View style={styles.main}>
       <InnerText
         title={'내일 아침'}
         img={img}
-        desc={desc.morning}
+        desc={mor}
         figure={temps.morning}
       />
       <InnerText
         title={'내일 점심'}
         img={img}
-        desc={desc.afternoon}
+        desc={aft}
         figure={temps.afternoon}
       />
       <InnerText
         title={'내일 저녁'}
         img={img}
-        desc={desc.evening}
+        desc={din}
         figure={temps.evening}
       />
     </View>

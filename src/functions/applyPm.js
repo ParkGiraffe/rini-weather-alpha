@@ -1,4 +1,4 @@
-// 초단기예보 : 현재 기온과 강수량
+
 
 export default function applyPm(pmObj) {
   console.log(pmObj);
