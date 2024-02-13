@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import Img from './Img';
 
 const Temperature = props => {
   const {title, img, desc, figure} = props;
@@ -7,10 +8,15 @@ const Temperature = props => {
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.imgContainer}>{img}</View>
+      {/* <View style={styles.imgContainer}>{img}</View> */}
       <View style={styles.botTextContainer}>
-        <Text style={styles.desc}>{desc}</Text>
-        <Text style={styles.figure}>{figure}</Text>
+        <View>
+          <Text style={styles.figure}>{figure}</Text>
+        </View>
+      <Img />
+        <View>
+          <Text style={styles.desc}>{desc}</Text>
+        </View>
       </View>
     </View>
   );
@@ -32,17 +38,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'yellow',
   },
   botTextContainer: {
+    // backgroundColor: 'blue',
     alignItems: 'center',
+    // flexDirection: 'row'
+    width: '45%',
+    flexDirection: 'row',
+    // backgroundColor: 'white',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 20,
   },
   desc: {
     fontSize: 15,
-    marginBottom: 5,
+    // marginBottom: 5,
   },
   figure: {
-    fontSize: 12,
+    fontSize: 15,
   },
 });
 export default Temperature;

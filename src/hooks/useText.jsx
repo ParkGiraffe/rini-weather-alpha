@@ -32,8 +32,8 @@ const useText = type => {
     }
 
     // 강수확률
-    if (type === 'POP') {
-    }
+    // if (type === 'POP') {
+    // }
   };
 
   return [text, fetchText];

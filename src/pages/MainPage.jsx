@@ -160,7 +160,7 @@ const MainPage = () => {
           rainDesc={rn1Text}
           rainAmount={`시간당 ${curWeather.rainfall}mm`}
           probDesc={'비가 내릴 확률'}
-          probFigure={`없음 : ${curPop}%`}
+          probFigure={`${curPop}%`}
         />
       </WideContainer>
       <Blank />
