@@ -8,15 +8,12 @@ const Temperature = props => {
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{title}</Text>
-      {/* <View style={styles.imgContainer}>{img}</View> */}
+      <View style={styles.imgContainer}>
+        <Img />
+      </View>
       <View style={styles.botTextContainer}>
-        <View>
-          <Text style={styles.figure}>{figure}</Text>
-        </View>
-      <Img />
-        <View>
-          <Text style={styles.desc}>{desc}</Text>
-        </View>
+        <Text style={styles.desc}>{desc}</Text>
+        <Text style={styles.figure}>{figure}</Text>
       </View>
     </View>
   );
@@ -25,36 +22,30 @@ const Temperature = props => {
 const styles = StyleSheet.create({
   main: {
     backgroundColor: '#d9d9d9',
-    height: 160,
+    height: 250,
     // width: 160,
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   imgContainer: {
-    height: 60,
-    width: 60,
-    backgroundColor: 'yellow',
+    height: 150,
+    width: 150,
+    // backgroundColor: 'yellow',
   },
   botTextContainer: {
-    // backgroundColor: 'blue',
     alignItems: 'center',
-    // flexDirection: 'row'
-    width: '45%',
-    flexDirection: 'row',
-    // backgroundColor: 'white',
-    justifyContent: 'space-between',
   },
   title: {
     fontSize: 20,
   },
   desc: {
     fontSize: 15,
-    // marginBottom: 5,
+    marginBottom: 5,
   },
   figure: {
-    fontSize: 15,
+    fontSize: 12,
   },
 });
 export default Temperature;

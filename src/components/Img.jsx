@@ -15,8 +15,8 @@ const Img = () => {
 
 const styles = StyleSheet.create({
   main: {
-    height: 80,
-    width: 80,
+    // height: 80,
+    // width: 80,
     // backgroundColor: 'grey',
     justifyContent: 'center',
     alignContent: 'center',
