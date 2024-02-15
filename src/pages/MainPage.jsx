@@ -129,13 +129,13 @@ const MainPage = () => {
   return (
     <ScrollView style={styles.main}>
       <TopTexts city={locality} />
-
-      <Temperature
-        title={'기온'}
-        desc={curTmpText}
-        figure={`${curWeather.temperature}도`}
-      />
-
+      
+        <Temperature
+          title={'기온'}
+          desc={curTmpText}
+          figure={`${curWeather.temperature}도`}
+        />
+      
       <Blank />
 
       <WideContainer>
