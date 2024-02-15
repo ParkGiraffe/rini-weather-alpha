@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // justifyContent: 'space-between',
     paddingVertical: 10,
+    // paddingHorizontal: 2,
   },
   imgContainer: {
-    height: 95,
-    width: 95,
+    height: 92,
+    width: 92,
     // backgroundColor: 'yellow',
     marginBottom: 7,
   },

@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import Img from './Img';
 
 const Precipitation = props => {
   const {title, img, rainDesc, rainAmount, probDesc, probFigure} = props;
@@ -14,7 +15,9 @@ const Precipitation = props => {
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.imgContainer}>{img}</View>
+      <View style={styles.imgContainer}>
+        <Img img={img} />
+      </View>
       <View style={styles.bottomLine}>
         <View style={styles.botTextContainer}>
           <Text style={styles.desc}>{rainDesc}</Text>
@@ -31,24 +34,24 @@ const Precipitation = props => {
 
 const styles = StyleSheet.create({
   main: {
-    // backgroundColor: '#d9d9d9',
-    height: 160,
+    backgroundColor: '#d9d9d9',
+    height: 250,
     // width: 160,
-    // borderRadius: 15,
+    borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   imgContainer: {
-    height: 60,
-    width: 60,
-    backgroundColor: 'yellow',
+    height: 150,
+    width: 150,
+    // backgroundColor: 'yellow',
   },
   bottomLine: {
-    width : '75%',
+    width: '75%',
     flexDirection: 'row',
     // backgroundColor: 'white',
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   botTextContainer: {
     alignItems: 'center',

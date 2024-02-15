@@ -45,6 +45,7 @@ const MainPage = () => {
   const [tmrMorTmpImg, setTmrMorTmpImg] = useImg('TMP');
   const [tmrAftTmpImg, setTmrAftTmpImg] = useImg('TMP');
   const [tmrDinTmpImg, setTmrDinTmpImg] = useImg('TMP');
+  const [rn1Img, setRn1Img] = useImg('RN1');
 
   useEffect(() => {
     // 단기예보 : 강수확률, 내일과 모레 기온
@@ -82,7 +83,7 @@ const MainPage = () => {
       });
       setCurTmpText(T1H);
       setCurTmpImg(T1H);
-      setRn1Text(RN1);
+      setRn1Img(RN1);
     };
 
     const ReverseGeoCode = async () => {
@@ -171,15 +172,15 @@ const MainPage = () => {
       </View>
       <Blank /> */}
 
-      <WideContainer>
-        <Precipitation
-          title={'강수량'}
-          rainDesc={rn1Text}
-          rainAmount={`시간당 ${curWeather.rainfall}mm`}
-          probDesc={'비가 내릴 확률'}
-          probFigure={`${curPop}%`}
-        />
-      </WideContainer>
+      <Precipitation
+        title={'강수량'}
+        rainDesc={rn1Text}
+        rainAmount={`시간당 ${curWeather.rainfall}mm`}
+        probDesc={'비가 내릴 확률'}
+        probFigure={`${curPop}%`}
+        img={rn1Img}
+      />
+
       <Blank />
     </ScrollView>
   );
