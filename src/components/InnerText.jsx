@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Img from './Img';
 
 const InnerText = props => {
   const {title, img, desc, figure} = props;
@@ -10,7 +11,9 @@ const InnerText = props => {
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.figure}>{figure}도</Text>
       </View>
-      <View style={styles.imgContainer}>{img}</View>
+      <View style={styles.imgContainer}>
+        <Img img={img} />
+      </View>
       <Text style={styles.desc}>{desc}</Text>
     </View>
   );
@@ -27,9 +30,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   imgContainer: {
-    height: 60,
-    width: 60,
-    backgroundColor: 'yellow',
+    height: 95,
+    width: 95,
+    // backgroundColor: 'yellow',
     marginBottom: 7,
   },
   topTextContainer: {

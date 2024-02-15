@@ -23,6 +23,7 @@ import applyPm from '../functions/applyPm';
 import getPmUrl from '../functions/pmUrl';
 import applyVilageFcst from '../functions/\bapplyVilageFcst';
 import useText from '../hooks/useText';
+import useImg from '../hooks/useImg';
 
 const MainPage = () => {
   const [curWeather, setCurWeather] = useState({});
@@ -40,6 +41,11 @@ const MainPage = () => {
   const [tmrDinTmpText, setTmrDinTmpText] = useText('TMP');
   const [rn1Text, setRn1Text] = useText('RN1');
 
+  const [curTmpImg, setCurTmpImg] = useImg('TMP');
+  const [tmrMorTmpImg, setTmrMorTmpImg] = useImg('TMP');
+  const [tmrAftTmpImg, setTmrAftTmpImg] = useImg('TMP');
+  const [tmrDinTmpImg, setTmrDinTmpImg] = useImg('TMP');
+
   useEffect(() => {
     // 단기예보 : 강수확률, 내일과 모레 기온
     const vilageFcst = async () => {
@@ -53,9 +59,15 @@ const MainPage = () => {
         afternoon: forecastData[1],
         evening: forecastData[2],
       });
+
+      // console.log(forecastData)
       setTmrMorTmpText(forecastData[0]);
       setTmrAftTmpText(forecastData[1]);
       setTmrDinTmpText(forecastData[2]);
+
+      setTmrMorTmpImg(forecastData[0]);
+      setTmrAftTmpImg(forecastData[1]);
+      setTmrDinTmpImg(forecastData[2]);
     };
 
     // 초단기예보 : 현재기온, 1시간 강수량
@@ -69,6 +81,7 @@ const MainPage = () => {
         rainfall: RN1,
       });
       setCurTmpText(T1H);
+      setCurTmpImg(T1H);
       setRn1Text(RN1);
     };
 
@@ -129,13 +142,14 @@ const MainPage = () => {
   return (
     <ScrollView style={styles.main}>
       <TopTexts city={locality} />
-      
-        <Temperature
-          title={'기온'}
-          desc={curTmpText}
-          figure={`${curWeather.temperature}도`}
-        />
-      
+
+      <Temperature
+        title={'기온'}
+        desc={curTmpText}
+        figure={`${curWeather.temperature}도`}
+        img={curTmpImg}
+      />
+
       <Blank />
 
       <WideContainer>
@@ -144,6 +158,9 @@ const MainPage = () => {
           aft={tmrAftTmpText}
           din={tmrDinTmpText}
           temps={tmrWeather}
+          morImg={tmrMorTmpImg}
+          aftImg={tmrAftTmpImg}
+          dinImg={tmrDinTmpImg}
         />
       </WideContainer>
       <Blank />

@@ -8,10 +8,11 @@ const WideContainer = props => {
 const styles = StyleSheet.create({
   main: {
     backgroundColor: '#d9d9d9',
-    height: 160,
+    height: 200,
     width: '100%',
     borderRadius: 15,
-    // paddingVertical: 10,
+    paddingVertical: 10,
+    // justifyContent: 'center'
   },
 });
 

@@ -9,7 +9,7 @@ const Temperature = props => {
     <View style={styles.main}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.imgContainer}>
-        <Img type={'TMP'} figure={figure} />
+        <Img img={img} />
       </View>
       <View style={styles.botTextContainer}>
         <Text style={styles.desc}>{desc}</Text>

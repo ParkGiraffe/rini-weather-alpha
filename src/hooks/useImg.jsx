@@ -1,22 +1,28 @@
 const {useState} = require('react');
 
 const useImg = type => {
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState(null);
 
   const fetchImg = figure => {
     // 기온
     if (type === 'TMP') {
-      if (figure >= 28) setImg('여름의 무더위');
-      if (figure >= 23 && figure < 28) setImg('반팔 입기');
+      if (figure >= 28) setImg(require('../assets/emoticon/tmp7.png'));
+      if (figure >= 23 && figure < 28)
+        setImg(require('../assets/emoticon/tmp6.png'));
 
-      if (figure >= 20 && figure < 23) setImg('얇은 긴팔 입기');
-      if (figure >= 17 && figure < 20) setImg('맨투맨과 가디건 입기');
+      if (figure >= 20 && figure < 23)
+        setImg(require('../assets/emoticon/tmp5.png'));
+      if (figure >= 17 && figure < 20)
+        setImg(require('../assets/emoticon/tmp4.png'));
 
-      if (figure >= 12 && figure < 17) setImg('겉옷 걸치기');
-      if (figure >= 9 && figure < 12) setImg('여러 옷을 겹쳐서 입기');
+      if (figure >= 12 && figure < 17)
+        setImg(require('../assets/emoticon/tmp3.png'));
+      if (figure >= 9 && figure < 12)
+        setImg(require('../assets/emoticon/tmp3.png'));
 
-      if (figure >= 5 && figure < 9) setImg('털옷 입기');
-      if (figure < 5) setImg('꽁꽁싸매기');
+      if (figure >= 5 && figure < 9)
+        setImg(require('../assets/emoticon/tmp2.png'));
+      if (figure < 5) setImg(require('../assets/emoticon/tmp1.png'));
     }
 
     // 강수량

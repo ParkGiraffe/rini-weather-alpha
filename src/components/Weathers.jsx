@@ -3,25 +3,26 @@ import {StyleSheet, View, Text} from 'react-native';
 import InnerText from './InnerText';
 
 const Weathers = props => {
-  const {title, img, mor, aft, din, temps} = props;
+  const {title, morImg, aftImg, dinImg, mor, aft, din, temps} = props;
+  // console.log(props)
 
   return (
     <View style={styles.main}>
       <InnerText
         title={'내일 아침'}
-        img={img}
+        img={morImg}
         desc={mor}
         figure={temps.morning}
       />
       <InnerText
         title={'내일 점심'}
-        img={img}
+        img={aftImg}
         desc={aft}
         figure={temps.afternoon}
       />
       <InnerText
         title={'내일 저녁'}
-        img={img}
+        img={dinImg}
         desc={din}
         figure={temps.evening}
       />
@@ -31,10 +32,12 @@ const Weathers = props => {
 
 const styles = StyleSheet.create({
   main: {
-    alignItems: 'center',
     justifyContent: 'space-between',
+    // alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: '3%',
+    // backgroundColor:'black',
+    height: '100%',
   },
 });
 export default Weathers;
