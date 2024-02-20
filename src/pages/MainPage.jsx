@@ -4,10 +4,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
-import Container from '../components/Container';
 import WideContainer from '../components/WideContainer';
 import Blank from '../components/Blank';
 import Temperature from '../components/Temperature';
@@ -19,8 +16,6 @@ import applyUltraSrtFcst from '../functions/applyUltraSrtFcst';
 import getUrls from '../functions/urls';
 import Geolocation from 'react-native-geolocation-service';
 import applyReverseGeo from '../functions/applyReverseGeo';
-import applyPm from '../functions/applyPm';
-import getPmUrl from '../functions/pmUrl';
 import applyVilageFcst from '../functions/\bapplyVilageFcst';
 import useText from '../hooks/useText';
 import useImg from '../hooks/useImg';
